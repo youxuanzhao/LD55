@@ -1,10 +1,18 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0wgx0cytefyj"]
+[gd_scene load_steps=16 format=3 uid="uid://d0wgx0cytefyj"]
 
 [ext_resource type="Texture2D" uid="uid://dylptgvtlyr76" path="res://asset/tile_test.png" id="1_opalr"]
 [ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="1_xqyqv"]
 [ext_resource type="Script" path="res://scripts/core/tile_manager.gd" id="3_uj6dr"]
+[ext_resource type="Script" path="res://scripts/core/fire_spell.gd" id="4_4u3d8"]
 [ext_resource type="Texture2D" uid="uid://d2pq1kfgokh2e" path="res://asset/fire.png" id="4_qoln5"]
 [ext_resource type="Texture2D" uid="uid://31prxkveee1b" path="res://asset/frame-Sheet.png" id="5_fdymo"]
+[ext_resource type="Texture2D" uid="uid://c4vmbq4o283vm" path="res://asset/cooldown.png" id="7_67vuv"]
+[ext_resource type="Script" path="res://scripts/core/summon_display.gd" id="8_6d0fk"]
+[ext_resource type="Script" path="res://scripts/core/water_spell.gd" id="8_32qkn"]
+[ext_resource type="Texture2D" uid="uid://bwburk0sacoxp" path="res://asset/water.png" id="8_lkice"]
+[ext_resource type="Texture2D" uid="uid://c11i30qcmc08a" path="res://asset/left_arrow.png" id="9_mbauh"]
+[ext_resource type="Texture2D" uid="uid://jk00fkjbaktw" path="res://asset/earth.png" id="9_tlvrq"]
+[ext_resource type="Script" path="res://scripts/core/earth_spell.gd" id="10_ank46"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf75g"]
 texture = ExtResource("1_opalr")
@@ -19,25 +27,98 @@ script = ExtResource("1_xqyqv")
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_iwy6e")
 format = 2
-layer_0/tile_data = PackedInt32Array(131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 327683, 0, 0, 327682, 0, 0, 262146, 0, 0, 196610, 0, 0, 196611, 0, 0, 262147, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 262149, 0, 0, 196613, 0, 0, 327685, 0, 0, 393221, 0, 0, 393220, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0)
+layer_0/tile_data = PackedInt32Array(196621, 0, 0, 196622, 0, 0, 196624, 0, 0, 196623, 0, 0, 196625, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 327697, 0, 0, 327696, 0, 0, 327695, 0, 0, 327694, 0, 0, 327693, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 524305, 0, 0, 524304, 0, 0, 524303, 0, 0, 524302, 0, 0, 524301, 0, 0)
 script = ExtResource("3_uj6dr")
 
-[node name="Fire_Skill" type="Node2D" parent="."]
-position = Vector2(178, 159)
+[node name="FireSpell" type="Node2D" parent="."]
+position = Vector2(32, 157)
 scale = Vector2(2, 2)
+script = ExtResource("4_4u3d8")
 metadata/_edit_group_ = true
 
-[node name="Icon" type="Sprite2D" parent="Fire_Skill"]
+[node name="Icon" type="Sprite2D" parent="FireSpell"]
 texture = ExtResource("4_qoln5")
 
-[node name="Frame" type="Sprite2D" parent="Fire_Skill"]
+[node name="Frame" type="Sprite2D" parent="FireSpell"]
 texture = ExtResource("5_fdymo")
 hframes = 4
 
+[node name="Timer" type="Timer" parent="FireSpell"]
+
+[node name="Cooldown" type="Sprite2D" parent="FireSpell"]
+visible = false
+modulate = Color(1, 1, 1, 0.611765)
+position = Vector2(6, 6)
+rotation = 3.14159
+texture = ExtResource("7_67vuv")
+centered = false
+
+[node name="WaterSpell" type="Node2D" parent="."]
+position = Vector2(75, 157)
+scale = Vector2(2, 2)
+script = ExtResource("8_32qkn")
+metadata/_edit_group_ = true
+
+[node name="Icon" type="Sprite2D" parent="WaterSpell"]
+texture = ExtResource("8_lkice")
+
+[node name="Frame" type="Sprite2D" parent="WaterSpell"]
+texture = ExtResource("5_fdymo")
+hframes = 4
+
+[node name="Timer" type="Timer" parent="WaterSpell"]
+
+[node name="Cooldown" type="Sprite2D" parent="WaterSpell"]
+visible = false
+modulate = Color(1, 1, 1, 0.611765)
+position = Vector2(6, 6)
+rotation = 3.14159
+texture = ExtResource("7_67vuv")
+centered = false
+
+[node name="EarthSpell" type="Node2D" parent="."]
+position = Vector2(118, 157)
+scale = Vector2(2, 2)
+script = ExtResource("10_ank46")
+metadata/_edit_group_ = true
+
+[node name="Icon" type="Sprite2D" parent="EarthSpell"]
+texture = ExtResource("9_tlvrq")
+
+[node name="Frame" type="Sprite2D" parent="EarthSpell"]
+texture = ExtResource("5_fdymo")
+hframes = 4
+
+[node name="Timer" type="Timer" parent="EarthSpell"]
+
+[node name="Cooldown" type="Sprite2D" parent="EarthSpell"]
+visible = false
+modulate = Color(1, 1, 1, 0.611765)
+position = Vector2(6, 6)
+rotation = 3.14159
+texture = ExtResource("7_67vuv")
+centered = false
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 z_index = -1
-position = Vector2(0, -6.96373)
+position = Vector2(-146, -8.96373)
 scale = Vector2(1, 1.03627)
 color = Color(0.14902, 0.0941176, 0.14902, 1)
 polygon = PackedVector2Array(144, -1, 144, 192, 320, 192, 320, -1)
 metadata/_edit_group_ = true
+
+[node name="MergeDisplay" type="HBoxContainer" parent="."]
+offset_left = 193.0
+offset_top = 156.0
+offset_right = 235.0
+offset_bottom = 170.0
+theme_override_constants/separation = 0
+script = ExtResource("8_6d0fk")
+
+[node name="LeftArrow" type="Sprite2D" parent="."]
+position = Vector2(246, 164)
+texture = ExtResource("9_mbauh")
+
+[connection signal="timeout" from="FireSpell/Timer" to="FireSpell" method="_on_timer_timeout"]
+[connection signal="timeout" from="WaterSpell/Timer" to="WaterSpell" method="_on_timer_timeout"]
+[connection signal="timeout" from="EarthSpell/Timer" to="EarthSpell" method="_on_timer_timeout"]
