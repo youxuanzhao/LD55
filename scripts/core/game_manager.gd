@@ -4,6 +4,7 @@ extends Node2D
 static var instance : GameManager
 
 var current_list = []
+var tick : int = 0
 
 @onready var LeftArrow : Sprite2D = $LeftArrow
 
