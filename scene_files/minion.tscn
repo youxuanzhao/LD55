@@ -13,6 +13,7 @@ texture = ExtResource("1_puatt")
 script = ExtResource("2_08ak8")
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.654902)
 offset_left = -8.0
 offset_top = -12.0
 offset_right = 8.0
@@ -26,6 +27,16 @@ texture_progress = ExtResource("4_4sixi")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_jiu2d")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.1
+one_shot = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+radial_accel_max = 6.06
+angle_max = 360.0
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0wgx0cytefyj"]
+[gd_scene load_steps=23 format=3 uid="uid://d0wgx0cytefyj"]
 
 [ext_resource type="Texture2D" uid="uid://dylptgvtlyr76" path="res://asset/tile_test.png" id="1_opalr"]
 [ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="1_xqyqv"]
@@ -14,7 +14,11 @@
 [ext_resource type="Texture2D" uid="uid://c11i30qcmc08a" path="res://asset/left_arrow.png" id="9_mbauh"]
 [ext_resource type="Texture2D" uid="uid://jk00fkjbaktw" path="res://asset/earth.png" id="9_tlvrq"]
 [ext_resource type="Script" path="res://scripts/core/earth_spell.gd" id="10_ank46"]
-[ext_resource type="PackedScene" uid="uid://km7piloexuf7" path="res://scene_files/minion.tscn" id="15_wf07o"]
+[ext_resource type="Texture2D" uid="uid://uniakt3n6e2i" path="res://asset/summon.png" id="14_237hj"]
+[ext_resource type="Script" path="res://scripts/core/summon_spell.gd" id="14_uxo20"]
+[ext_resource type="Texture2D" uid="uid://c037y062dn5h2" path="res://asset/minion_test.png" id="15_f44ak"]
+[ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="18_6kpsa"]
+[ext_resource type="Texture2D" uid="uid://cb1n25ojjxe4f" path="res://asset/wall.png" id="19_fpjli"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf75g"]
 texture = ExtResource("1_opalr")
@@ -38,7 +42,7 @@ layer_0/tile_data = PackedInt32Array(196621, 0, 0, 196622, 0, 0, 196624, 0, 0, 1
 script = ExtResource("3_uj6dr")
 
 [node name="FireSpell" type="Node2D" parent="."]
-position = Vector2(32, 157)
+position = Vector2(26, 157)
 scale = Vector2(2, 2)
 script = ExtResource("4_4u3d8")
 metadata/_edit_group_ = true
@@ -61,7 +65,7 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="WaterSpell" type="Node2D" parent="."]
-position = Vector2(75, 157)
+position = Vector2(64, 157)
 scale = Vector2(2, 2)
 script = ExtResource("8_32qkn")
 metadata/_edit_group_ = true
@@ -84,7 +88,7 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="EarthSpell" type="Node2D" parent="."]
-position = Vector2(118, 157)
+position = Vector2(103, 157)
 scale = Vector2(2, 2)
 script = ExtResource("10_ank46")
 metadata/_edit_group_ = true
@@ -106,31 +110,70 @@ rotation = 3.14159
 texture = ExtResource("7_67vuv")
 centered = false
 
+[node name="SummonSpell" type="Node2D" parent="."]
+position = Vector2(144, 157)
+scale = Vector2(2, 2)
+script = ExtResource("14_uxo20")
+metadata/_edit_group_ = true
+
+[node name="Icon" type="Sprite2D" parent="SummonSpell"]
+scale = Vector2(0.86, 0.86)
+texture = ExtResource("14_237hj")
+
+[node name="Frame" type="Sprite2D" parent="SummonSpell"]
+texture = ExtResource("5_fdymo")
+hframes = 4
+
+[node name="Timer" type="Timer" parent="SummonSpell"]
+
+[node name="Cooldown" type="Sprite2D" parent="SummonSpell"]
+visible = false
+modulate = Color(1, 1, 1, 0.611765)
+position = Vector2(6, 6)
+rotation = 3.14159
+texture = ExtResource("7_67vuv")
+centered = false
+
 [node name="Polygon2D" type="Polygon2D" parent="."]
 z_index = -1
 position = Vector2(-146, -8.96373)
 scale = Vector2(1, 1.03627)
 color = Color(0.14902, 0.0941176, 0.14902, 1)
 polygon = PackedVector2Array(144, -1, 144, 192, 320, 192, 320, -1)
-metadata/_edit_group_ = true
 
 [node name="MergeDisplay" type="HBoxContainer" parent="."]
-offset_left = 193.0
-offset_top = 156.0
-offset_right = 235.0
-offset_bottom = 170.0
+offset_left = 208.0
+offset_top = 155.0
+offset_right = 250.0
+offset_bottom = 169.0
 theme_override_constants/separation = 0
 script = ExtResource("8_6d0fk")
 
 [node name="LeftArrow" type="Sprite2D" parent="."]
-position = Vector2(246, 164)
+position = Vector2(261, 163)
 texture = ExtResource("9_mbauh")
 
-[node name="Minion1" parent="." instance=ExtResource("15_wf07o")]
-position = Vector2(216, 133)
+[node name="ShowResult" type="Sprite2D" parent="LeftArrow"]
+position = Vector2(21, 0)
+texture = ExtResource("15_f44ak")
 
 [node name="TickManager" type="Timer" parent="."]
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 6.0
+offset_right = 48.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+text = "Tick: "
+
+[node name="Wall" type="Sprite2D" parent="."]
+position = Vector2(248, 116)
+texture = ExtResource("19_fpjli")
 
 [connection signal="timeout" from="FireSpell/Timer" to="FireSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="WaterSpell/Timer" to="WaterSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="EarthSpell/Timer" to="EarthSpell" method="_on_timer_timeout"]
+[connection signal="timeout" from="SummonSpell/Timer" to="SummonSpell" method="_on_timer_timeout"]
+[connection signal="timeout" from="TickManager" to="." method="_on_tick_manager_timeout"]

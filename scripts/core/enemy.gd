@@ -1,4 +1,4 @@
-class_name Minion
+class_name Enemy
 extends Sprite2D
 
 var minion_name : String
@@ -34,27 +34,6 @@ func _tick():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	HealthBar.value = hp
-	if Input.is_action_just_pressed("left_mouse") and is_hovering and is_reserve:
-		is_holding = true
-		pos_record = position
-		holding_offset = get_global_mouse_position() - position
-		
-		
-	if Input.is_action_just_released("left_mouse") and is_holding:
-		is_holding = false
-		var temp = TileManager.instance.local_to_map(position)
-		if temp.x < 12 or temp.x > 17 or temp.y < 1 or (temp.y > 6 and temp.y != 8):
-			position = pos_record
-		else:
-			position = TileManager.instance.map_to_local(temp) + pos_offset
-			tile_position = temp
-			if temp.y !=8:
-				is_reserve = false
-				enter_tick = GameManager.instance.tick
-			
-		
-	if is_holding:
-		position = get_global_mouse_position() - holding_offset
 
 func move(direction: Vector2i):
 	if !(is_reserve):
@@ -70,11 +49,3 @@ func move(direction: Vector2i):
 				tile_position.y = 6
 			position = TileManager.instance.map_to_local(tile_position) + pos_offset
 		
-
-
-func _on_area_2d_mouse_entered():
-	is_hovering = true
-
-
-func _on_area_2d_mouse_exited():
-	is_hovering = false

@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpkhnirkj52u4"]
+
+[ext_resource type="Texture2D" uid="uid://ce6thy73ujrrf" path="res://asset/enemy_test.png" id="1_2b8b6"]
+[ext_resource type="Texture2D" uid="uid://crfotyi4hdkcf" path="res://asset/healthbar_under.png" id="3_ofbjh"]
+[ext_resource type="Texture2D" uid="uid://cctv0d5r10iqp" path="res://asset/healthbar_progress.png" id="4_rmgcr"]
+
+[node name="Enemy" type="Sprite2D"]
+texture = ExtResource("1_2b8b6")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+modulate = Color(1, 1, 1, 0.654902)
+offset_left = -8.0
+offset_top = -12.0
+offset_right = 8.0
+offset_bottom = -8.0
+max_value = 10.0
+value = 8.0
+texture_under = ExtResource("3_ofbjh")
+texture_progress = ExtResource("4_rmgcr")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+lifetime = 0.1
+one_shot = true
+emission_shape = 1
+emission_sphere_radius = 10.0
+gravity = Vector2(2.08165e-12, 2.08165e-12)
+radial_accel_max = 6.06
+angle_max = 360.0

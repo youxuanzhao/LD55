@@ -29,6 +29,10 @@ func add_earth():
 func remove_top():
 	var temp = get_children()
 	temp[0].queue_free()
+	
+func remove_all():
+	for i in get_children():
+		i.queue_free()	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
