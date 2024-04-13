@@ -5,10 +5,11 @@ var minion_name : String
 var atk : int = 1
 var hp : int = 1
 var tile_position : Vector2i
-var is_reserve : bool = true
+var is_reserve : bool = false
 var lifespan : int = -1
 var birth_tick : int
 var enter_tick : int
+var is_friendly : bool = false
 
 @onready var HealthBar: TextureProgressBar = $HealthBar
 
@@ -35,7 +36,7 @@ func _tick():
 func _process(delta):
 	HealthBar.value = hp
 
-func move(direction: Vector2i):
+func move(direction: Vector2i) -> bool:
 	if !(is_reserve):
 		if !(TileManager.instance.has_entity_on(tile_position + direction)):
 			tile_position += direction
@@ -48,4 +49,23 @@ func move(direction: Vector2i):
 			if tile_position.y > 6:
 				tile_position.y = 6
 			position = TileManager.instance.map_to_local(tile_position) + pos_offset
-		
+			return true
+		else:
+			return false
+	else:
+		return false
+
+func attack(direction: Vector2i) -> bool:
+	if !(is_reserve):
+		if TileManager.instance.has_entity_on(tile_position + direction):
+			if instance_from_id(TileManager.instance.get_entity_on(tile_position + direction)).is_friendly:
+				print(instance_from_id(TileManager.instance.get_entity_on(tile_position + direction)))
+				instance_from_id(TileManager.instance.get_entity_on(tile_position + direction)).take_damage(atk)
+			return true
+		else:
+			return false
+	else:
+		return false
+
+func take_damage(amount: int):
+	hp= hp - amount

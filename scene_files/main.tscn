@@ -169,6 +169,7 @@ theme_override_fonts/font = ExtResource("18_6kpsa")
 text = "Tick: "
 
 [node name="Wall" type="Sprite2D" parent="."]
+z_index = -1
 position = Vector2(248, 116)
 texture = ExtResource("19_fpjli")
 

@@ -3,7 +3,6 @@ extends TileMap
 
 static var instance : TileManager
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instance = self
@@ -11,7 +10,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(local_to_map(get_global_mouse_position()))
+	if GameManager.instance.tick == 3:
+		var temp = preload("res://scene_files/enemy.tscn").instantiate()
+		temp.set_script(preload("res://scripts/enemies/retard.gd"))
+		spawn_enemy_on(temp,Vector2i(13,1))
+#	print(local_to_map(get_global_mouse_position()))
 
 func summon(target: Minion):
 	for i in range(13,18):
@@ -22,6 +25,13 @@ func summon(target: Minion):
 			add_child(target)
 			return true
 	return false
+
+func spawn_enemy_on(target: Enemy, pos: Vector2i):
+	if !(has_entity_on(pos)):
+		target.position = map_to_local(pos) + target.pos_offset
+		target.tile_position = pos
+		target.birth_tick = GameManager.instance.tick
+		add_child(target)
 
 func has_entity_on(pos:Vector2i) -> bool:
 	for n in get_children():
