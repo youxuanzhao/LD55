@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0wgx0cytefyj"]
+
+[ext_resource type="Texture2D" uid="uid://dylptgvtlyr76" path="res://asset/tile_test.png" id="1_opalr"]
+[ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="1_xqyqv"]
+[ext_resource type="Script" path="res://scripts/core/tile_manager.gd" id="3_uj6dr"]
+[ext_resource type="Texture2D" uid="uid://d2pq1kfgokh2e" path="res://asset/fire.png" id="4_qoln5"]
+[ext_resource type="Texture2D" uid="uid://31prxkveee1b" path="res://asset/frame-Sheet.png" id="5_fdymo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf75g"]
+texture = ExtResource("1_opalr")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_iwy6e"]
+sources/0 = SubResource("TileSetAtlasSource_gf75g")
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource("1_xqyqv")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_iwy6e")
+format = 2
+layer_0/tile_data = PackedInt32Array(131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 196609, 0, 0, 262145, 0, 0, 327681, 0, 0, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 327683, 0, 0, 327682, 0, 0, 262146, 0, 0, 196610, 0, 0, 196611, 0, 0, 262147, 0, 0, 196612, 0, 0, 262148, 0, 0, 327684, 0, 0, 262149, 0, 0, 196613, 0, 0, 327685, 0, 0, 393221, 0, 0, 393220, 0, 0, 524289, 0, 0, 524290, 0, 0, 524291, 0, 0, 524292, 0, 0, 524293, 0, 0)
+script = ExtResource("3_uj6dr")
+
+[node name="Fire_Skill" type="Node2D" parent="."]
+position = Vector2(178, 159)
+scale = Vector2(2, 2)
+metadata/_edit_group_ = true
+
+[node name="Icon" type="Sprite2D" parent="Fire_Skill"]
+texture = ExtResource("4_qoln5")
+
+[node name="Frame" type="Sprite2D" parent="Fire_Skill"]
+texture = ExtResource("5_fdymo")
+hframes = 4
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = -1
+position = Vector2(0, -6.96373)
+scale = Vector2(1, 1.03627)
+color = Color(0.14902, 0.0941176, 0.14902, 1)
+polygon = PackedVector2Array(144, -1, 144, 192, 320, 192, 320, -1)
+metadata/_edit_group_ = true
