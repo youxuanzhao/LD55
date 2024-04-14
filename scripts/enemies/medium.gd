@@ -1,8 +1,9 @@
 extends Enemy
 
 func _ready():
-	hp = 4
-	atk = 1
+	level = 1
+	hp = 7
+	atk = 2
 	super._ready()
 
 func _tick():

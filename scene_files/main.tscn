@@ -50,7 +50,8 @@ sources/2 = SubResource("TileSetAtlasSource_h0b56")
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_xqyqv")
-waves = [[3, 5, 8, 10, 10], [2, 2, 2], null, null, null]
+waves = [[3, 6, 8, 12], [3, 3, 6, 8, 11, 12], [], [], []]
+wave_config = [[0, 0, 0, 1], [], [], [], []]
 
 [node name="Battleground" type="Sprite2D" parent="."]
 z_index = -1
@@ -72,6 +73,7 @@ texture = ExtResource("6_l0jlh")
 
 [node name="ItemSlot" parent="." instance=ExtResource("8_3rase")]
 position = Vector2(88, 78)
+scale = Vector2(2.5, 2.5)
 
 [node name="FireSpell" type="Node2D" parent="."]
 position = Vector2(26, 160)
@@ -275,10 +277,10 @@ value = 30.0
 texture_progress = ExtResource("23_bcpn2")
 
 [node name="StartWaveButton" type="Button" parent="."]
-offset_left = 96.0
-offset_top = 114.0
-offset_right = 166.0
-offset_bottom = 135.0
+offset_left = 246.0
+offset_top = 157.0
+offset_right = 316.0
+offset_bottom = 178.0
 theme_override_fonts/font = ExtResource("18_6kpsa")
 theme_override_font_sizes/font_size = 14
 text = "Next wave"
@@ -287,14 +289,15 @@ text = "Next wave"
 stream = ExtResource("26_y77xf")
 autoplay = true
 
-[node name="TextureButton" type="TextureButton" parent="."]
-offset_left = 113.0
-offset_top = 90.0
-offset_right = 129.0
-offset_bottom = 106.0
+[node name="RefreshButton" type="TextureButton" parent="."]
+offset_left = 120.0
+offset_top = 42.0
+offset_right = 136.0
+offset_bottom = 58.0
 texture_normal = ExtResource("28_8a10b")
 
-[node name="Price" type="Label" parent="TextureButton"]
+[node name="Price" type="Label" parent="RefreshButton"]
+layout_mode = 0
 offset_left = -6.0
 offset_top = 16.0
 offset_right = 104.0
@@ -310,4 +313,5 @@ horizontal_alignment = 1
 [connection signal="timeout" from="EarthSpell/Timer" to="EarthSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="SummonSpell/Timer" to="SummonSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="TickManager" to="." method="_on_tick_manager_timeout"]
-[connection signal="pressed" from="TextureButton" to="ItemSlot" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="StartWaveButton" to="." method="_on_start_wave_button_pressed"]
+[connection signal="pressed" from="RefreshButton" to="ItemSlot" method="_on_texture_button_pressed"]

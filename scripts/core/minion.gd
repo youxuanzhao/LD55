@@ -21,6 +21,8 @@ var pos_offset : Vector2 = Vector2(0,-2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	hp+=GameManager.instance.extra_health
+	atk+=GameManager.instance.extra_attack
 	HealthBar.visible = true
 	HealthBar.max_value = hp
 	HealthBar.value = hp

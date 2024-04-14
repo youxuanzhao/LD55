@@ -16,9 +16,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	frame.frame = GameManager.instance.fire_level
 	
 	if is_in_cooldown:
-		cooldown.scale.y = timer.time_left / (default_cooldown-(GameManager.instance.fire_level-1)*cooldown_reduce)
+		cooldown.scale.y = timer.time_left / (default_cooldown-GameManager.instance.fire_level*cooldown_reduce)
 	
 	if Input.is_action_just_pressed("fire_spell") and !(is_in_cooldown) and !(GameManager.instance.is_paused):
 		$AudioStreamPlayer2D.play()

@@ -7,21 +7,22 @@ var current_list = []
 var current_wave = 0
 var current_enemy = 0
 var tick : int = 0
-var total_coins : int = 0
+var total_coins : int = 9999
 var minion_template : Minion = preload("res://scene_files/minion.tscn").instantiate()
 var remaining_enemies : int
 var has_spawned_all : bool = false
 var is_paused: bool = false
-var fire_level : int = 1
-var water_level : int = 1
-var earth_level : int = 1
-var summon_level : int = 1
+var fire_level : int = 0
+var water_level : int = 0
+var earth_level : int = 0
+var summon_level : int = 0
 var extra_health : int = 0
 var extra_attack : int = 0
 
 
 
 @export var waves : Array
+@export var wave_config : Array
 @export var wall_hp : int = 30
 
 const inferno = ["fire","fire","fire"]
@@ -61,6 +62,9 @@ const life6 = ["earth","water","fire"]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	instance = self
+	$RefreshButton.visible = false
+	$ItemSlot.visible = false
+	$Label2.visible = true
 	$StartWaveButton.visible = false
 	$LeftArrow.visible = false
 	$WallHp.max_value = wall_hp
@@ -75,7 +79,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	if remaining_enemies == 0:
+	if remaining_enemies == 0 and !is_paused:
 		end_wave()
 	
 	$WallHp.value = wall_hp
@@ -244,7 +248,10 @@ func _on_tick_manager_timeout():
 		if tick >= waves[current_wave][current_enemy]:
 			var spawned : bool = false
 			var temp = preload("res://scene_files/enemy.tscn").instantiate()
-			temp.set_script(preload("res://scripts/enemies/retard.gd"))
+			if wave_config[current_wave][current_enemy] == 0:
+				temp.set_script(preload("res://scripts/enemies/easy.gd"))
+			elif wave_config[current_wave][current_enemy] == 1:
+				temp.set_script(preload("res://scripts/enemies/medium.gd"))
 			while !spawned:
 				var i = randi_range(13,17)
 				if !(TileManager.instance.has_entity_on(Vector2i(i,1))):
@@ -271,6 +278,9 @@ func wall_take_damage(amount: int):
 	wall_hp -= amount
 
 func start_wave():
+	$RefreshButton.visible = false
+	$Label2.visible = true
+	$ItemSlot.visible = false
 	current_wave += 1
 	current_enemy = 0
 	tick = 0
@@ -279,9 +289,14 @@ func start_wave():
 			i.birth_tick = 0
 	$StartWaveButton.visible = false
 	has_spawned_all = false
+	remaining_enemies = waves[current_wave].size()
+	is_paused = false
 
 func end_wave():
 	is_paused = true
+	$RefreshButton.visible = true
+	$Label2.visible = false
+	ItemSlot.instance.refresh()
 	$StartWaveButton.visible = true
 	for i in get_children():
 		TileManager.instance.clear_level()
@@ -292,7 +307,14 @@ func queue_enemy():
 	for i in range(13,18):
 			if !(TileManager.instance.has_entity_on(Vector2i(i,1))):
 				var temp = preload("res://scene_files/enemy.tscn").instantiate()
-				temp.set_script(preload("res://scripts/enemies/retard.gd"))
-				TileManager.instance.spawn_enemy_on(temp,Vector2i(13,1))
+				if wave_config[current_wave][current_enemy] == 0:
+					temp.set_script(preload("res://scripts/enemies/easy.gd"))
+				elif wave_config[current_wave][current_enemy] == 1:
+					temp.set_script(preload("res://scripts/enemies/medium.gd"))
+				TileManager.instance.spawn_enemy_on(temp,Vector2i(i,1))
 				return 0
 	return queue_enemy()
+
+
+func _on_start_wave_button_pressed():
+	start_wave()

@@ -1,6 +1,7 @@
 class_name Enemy
 extends Sprite2D
 
+var level : int = 0
 var minion_name : String
 var atk : int = 1
 var hp : int = 1
@@ -21,6 +22,7 @@ var pos_offset : Vector2 = Vector2(0,-2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	frame = level
 	HealthBar.max_value = hp
 	HealthBar.value = hp
 

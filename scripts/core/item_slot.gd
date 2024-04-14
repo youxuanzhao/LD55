@@ -19,7 +19,7 @@ func _ready():
 func refresh():
 	current_item = randi_range(0,5)
 	
-	if (current_item == 0 and GameManager.instance.fire_level == 4) or (current_item == 1 and GameManager.instance.water_level == 4) or (current_item == 2 and GameManager.instance.earth_level == 4) or (current_item == 3 and GameManager.instance.summon_level == 4):
+	if (current_item == 0 and GameManager.instance.fire_level == 3) or (current_item == 1 and GameManager.instance.water_level == 3) or (current_item == 2 and GameManager.instance.earth_level == 3) or (current_item == 3 and GameManager.instance.summon_level == 3):
 		return refresh()
 	
 	visible = true
@@ -36,6 +36,7 @@ func _on_area_2d_mouse_entered():
 
 func purchase():
 	if GameManager.instance.total_coins >= price_list[current_item]:
+		visible = false
 		if current_item == 0:
 			GameManager.instance.upgrade_fire()
 			GameManager.instance.total_coins -= price_list[current_item]
