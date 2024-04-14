@@ -10,11 +10,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if GameManager.instance.tick == 3:
-		var temp = preload("res://scene_files/enemy.tscn").instantiate()
-		temp.set_script(preload("res://scripts/enemies/retard.gd"))
-		spawn_enemy_on(temp,Vector2i(13,1))
-#	print(local_to_map(get_global_mouse_position()))
+#	if GameManager.instance.tick == 3:
+#		var temp = preload("res://scene_files/enemy.tscn").instantiate()
+#		temp.set_script(preload("res://scripts/enemies/retard.gd"))
+#		spawn_enemy_on(temp,Vector2i(13,1))
+	print(local_to_map(get_global_mouse_position()))
+	pass
 
 func summon(target: Minion):
 	for i in range(13,18):
@@ -48,3 +49,11 @@ func get_entity_on(pos:Vector2i) -> int:
 func tick():
 	for n in get_children():
 		n._tick()
+
+func clear_level():
+	for i in get_children():
+		if i is Minion:
+			if i.tile_position.y != 8:
+				i.queue_free()
+		if i is Enemy:
+			i.queue_free()

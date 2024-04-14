@@ -26,10 +26,13 @@ func _ready():
 
 func _tick():
 	if hp < 1:
+		GameManager.instance.spawn_coin_on_position(position,randi_range(0,4))
+		GameManager.instance.elim()
 		queue_free()
 	
 	if GameManager.instance.tick - enter_tick > lifespan:
 		if lifespan!=-1:
+			GameManager.instance.elim()
 			queue_free()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,6 +41,8 @@ func _process(delta):
 
 func move(direction: Vector2i) -> bool:
 	if !(is_reserve):
+		if (tile_position + direction).y > 6:
+			return false		
 		if !(TileManager.instance.has_entity_on(tile_position + direction)):
 			tile_position += direction
 			if tile_position.x < 12:
@@ -48,7 +53,8 @@ func move(direction: Vector2i) -> bool:
 				tile_position.y = 1
 			if tile_position.y > 6:
 				tile_position.y = 6
-			position = TileManager.instance.map_to_local(tile_position) + pos_offset
+			var tween = get_tree().create_tween()
+			tween.tween_property(self, "position", TileManager.instance.map_to_local(tile_position) + pos_offset, 0.5)
 			return true
 		else:
 			return false
@@ -56,6 +62,10 @@ func move(direction: Vector2i) -> bool:
 		return false
 
 func attack(direction: Vector2i) -> bool:
+	if tile_position.y == 6:
+		GameManager.instance.wall_take_damage(atk)
+		return true
+	
 	if !(is_reserve):
 		if TileManager.instance.has_entity_on(tile_position + direction):
 			if instance_from_id(TileManager.instance.get_entity_on(tile_position + direction)).is_friendly:

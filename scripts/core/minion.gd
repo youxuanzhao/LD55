@@ -21,6 +21,7 @@ var pos_offset : Vector2 = Vector2(0,-2)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	HealthBar.visible = true
 	HealthBar.max_value = hp
 	HealthBar.value = hp
 
@@ -35,7 +36,7 @@ func _tick():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	HealthBar.value = hp
-	if Input.is_action_just_pressed("left_mouse") and is_hovering and is_reserve:
+	if Input.is_action_just_pressed("left_mouse") and is_hovering and is_reserve and !(GameManager.instance.is_paused):
 		is_holding = true
 		pos_record = position
 		holding_offset = get_global_mouse_position() - position
@@ -44,7 +45,7 @@ func _process(delta):
 	if Input.is_action_just_released("left_mouse") and is_holding:
 		is_holding = false
 		var temp = TileManager.instance.local_to_map(position)
-		if temp.x < 12 or temp.x > 17 or temp.y < 1 or (temp.y > 6 and temp.y != 8):
+		if (temp.x < 12 or temp.x > 17 or temp.y < 1 or (temp.y > 6 and temp.y != 8)) and !(TileManager.instance.has_entity_on(temp)):
 			position = pos_record
 		else:
 			position = TileManager.instance.map_to_local(temp) + pos_offset
@@ -69,7 +70,8 @@ func move(direction: Vector2i) -> bool:
 				tile_position.y = 2
 			if tile_position.y > 6:
 				tile_position.y = 6
-			position = TileManager.instance.map_to_local(tile_position) + pos_offset
+			var tween = get_tree().create_tween()
+			tween.tween_property(self, "position", TileManager.instance.map_to_local(tile_position) + pos_offset, 0.5)
 			return true
 		else:
 			return false

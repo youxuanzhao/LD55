@@ -1,12 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0wgx0cytefyj"]
+[gd_scene load_steps=30 format=3 uid="uid://d0wgx0cytefyj"]
 
 [ext_resource type="Texture2D" uid="uid://dylptgvtlyr76" path="res://asset/tile_test.png" id="1_opalr"]
 [ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="1_xqyqv"]
+[ext_resource type="Texture2D" uid="uid://cr7pb8ee5ngpg" path="res://asset/battleground.png" id="2_nr8ee"]
 [ext_resource type="Texture2D" uid="uid://c5h255cmaykkl" path="res://asset/tile_test_highlight.png" id="3_jwhkn"]
 [ext_resource type="Script" path="res://scripts/core/tile_manager.gd" id="3_uj6dr"]
 [ext_resource type="Script" path="res://scripts/core/fire_spell.gd" id="4_4u3d8"]
 [ext_resource type="Texture2D" uid="uid://d2pq1kfgokh2e" path="res://asset/fire.png" id="4_qoln5"]
+[ext_resource type="Texture2D" uid="uid://bjlv4moh123if" path="res://asset/tile_test_skull.png" id="4_v867s"]
 [ext_resource type="Texture2D" uid="uid://31prxkveee1b" path="res://asset/frame-Sheet.png" id="5_fdymo"]
+[ext_resource type="Texture2D" uid="uid://c7y05in1lmc0v" path="res://asset/shop.png" id="6_l0jlh"]
 [ext_resource type="Texture2D" uid="uid://c4vmbq4o283vm" path="res://asset/cooldown.png" id="7_67vuv"]
 [ext_resource type="Script" path="res://scripts/core/summon_display.gd" id="8_6d0fk"]
 [ext_resource type="Script" path="res://scripts/core/water_spell.gd" id="8_32qkn"]
@@ -18,7 +21,10 @@
 [ext_resource type="Script" path="res://scripts/core/summon_spell.gd" id="14_uxo20"]
 [ext_resource type="Texture2D" uid="uid://c037y062dn5h2" path="res://asset/minion_test.png" id="15_f44ak"]
 [ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="18_6kpsa"]
-[ext_resource type="Texture2D" uid="uid://cb1n25ojjxe4f" path="res://asset/wall.png" id="19_fpjli"]
+[ext_resource type="Texture2D" uid="uid://cwgkgcuew6o7q" path="res://asset/coin.png" id="20_sy7f8"]
+[ext_resource type="Texture2D" uid="uid://ior526kmefn" path="res://asset/skull.png" id="21_cxlqn"]
+[ext_resource type="Texture2D" uid="uid://jd3ds6mhkd6c" path="res://asset/wall-Sheet.png" id="22_n5v0t"]
+[ext_resource type="Texture2D" uid="uid://ix8oxvjipihp" path="res://asset/wall_hp.png" id="23_bcpn2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf75g"]
 texture = ExtResource("1_opalr")
@@ -28,21 +34,39 @@ texture = ExtResource("1_opalr")
 texture = ExtResource("3_jwhkn")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h0b56"]
+texture = ExtResource("4_v867s")
+0:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_iwy6e"]
 sources/0 = SubResource("TileSetAtlasSource_gf75g")
 sources/1 = SubResource("TileSetAtlasSource_o86jr")
+sources/2 = SubResource("TileSetAtlasSource_h0b56")
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_xqyqv")
+waves = [[3, 5, 8, 10, 10], [2, 2, 2], null, null, null]
+
+[node name="Battleground" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(247, 91)
+scale = Vector2(2.28, 2.28)
+texture = ExtResource("2_nr8ee")
 
 [node name="TileManager" type="TileMap" parent="."]
+position = Vector2(0, 6)
 tile_set = SubResource("TileSet_iwy6e")
 format = 2
-layer_0/tile_data = PackedInt32Array(196621, 0, 0, 196622, 0, 0, 196624, 0, 0, 196623, 0, 0, 196625, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 327697, 0, 0, 327696, 0, 0, 327695, 0, 0, 327694, 0, 0, 327693, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 524305, 0, 0, 524304, 0, 0, 524303, 0, 0, 524302, 0, 0, 524301, 0, 0, 65549, 0, 0, 65550, 0, 0, 65551, 0, 0, 65552, 0, 0, 65553, 0, 0)
+layer_0/tile_data = PackedInt32Array(196621, 0, 0, 196622, 0, 0, 196624, 0, 0, 196623, 0, 0, 196625, 0, 0, 131085, 0, 0, 131086, 0, 0, 131087, 0, 0, 131088, 0, 0, 131089, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 262161, 0, 0, 327697, 0, 0, 327696, 0, 0, 327695, 0, 0, 327694, 0, 0, 327693, 0, 0, 393229, 0, 0, 393230, 0, 0, 393231, 0, 0, 393232, 0, 0, 393233, 0, 0, 524305, 0, 0, 524304, 0, 0, 524303, 0, 0, 524302, 0, 0, 524301, 0, 0, 65549, 2, 0, 65550, 2, 0, 65551, 2, 0, 65552, 2, 0, 65553, 2, 0)
 script = ExtResource("3_uj6dr")
 
+[node name="Shop" type="Sprite2D" parent="."]
+position = Vector2(87, 69)
+scale = Vector2(2.16967, 2.175)
+texture = ExtResource("6_l0jlh")
+
 [node name="FireSpell" type="Node2D" parent="."]
-position = Vector2(26, 157)
+position = Vector2(26, 160)
 scale = Vector2(2, 2)
 script = ExtResource("4_4u3d8")
 metadata/_edit_group_ = true
@@ -65,7 +89,7 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="WaterSpell" type="Node2D" parent="."]
-position = Vector2(64, 157)
+position = Vector2(65, 160)
 scale = Vector2(2, 2)
 script = ExtResource("8_32qkn")
 metadata/_edit_group_ = true
@@ -88,7 +112,7 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="EarthSpell" type="Node2D" parent="."]
-position = Vector2(103, 157)
+position = Vector2(105, 160)
 scale = Vector2(2, 2)
 script = ExtResource("10_ank46")
 metadata/_edit_group_ = true
@@ -111,7 +135,7 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="SummonSpell" type="Node2D" parent="."]
-position = Vector2(144, 157)
+position = Vector2(146, 160)
 scale = Vector2(2, 2)
 script = ExtResource("14_uxo20")
 metadata/_edit_group_ = true
@@ -138,7 +162,7 @@ centered = false
 z_index = -1
 position = Vector2(-146, -8.96373)
 scale = Vector2(1, 1.03627)
-color = Color(0.14902, 0.0941176, 0.14902, 1)
+color = Color(0.141176, 0.0823529, 0.0784314, 1)
 polygon = PackedVector2Array(144, -1, 144, 192, 320, 192, 320, -1)
 
 [node name="MergeDisplay" type="HBoxContainer" parent="."]
@@ -150,6 +174,7 @@ theme_override_constants/separation = 0
 script = ExtResource("8_6d0fk")
 
 [node name="LeftArrow" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(261, 163)
 texture = ExtResource("9_mbauh")
 
@@ -161,17 +186,79 @@ texture = ExtResource("15_f44ak")
 autostart = true
 
 [node name="Label" type="Label" parent="."]
-offset_left = 8.0
-offset_top = 6.0
-offset_right = 48.0
-offset_bottom = 29.0
+visible = false
+offset_left = 177.0
+offset_top = 44.0
+offset_right = 217.0
+offset_bottom = 67.0
 theme_override_fonts/font = ExtResource("18_6kpsa")
 text = "Tick: "
 
+[node name="Label2" type="Label" parent="."]
+offset_left = 67.0
+offset_top = 70.0
+offset_right = 107.0
+offset_bottom = 93.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+text = "Closed"
+
+[node name="WaveCount" type="Label" parent="."]
+offset_left = 177.0
+offset_top = 4.0
+offset_right = 223.0
+offset_bottom = 27.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+theme_override_font_sizes/font_size = 14
+text = "WAVE 1"
+
+[node name="CoinCount" type="Label" parent="."]
+offset_left = 150.0
+offset_top = 4.0
+offset_right = 158.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+text = "0"
+
+[node name="RemainCount" type="Label" parent="."]
+offset_left = 307.0
+offset_top = 3.0
+offset_right = 315.0
+offset_bottom = 19.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+text = "0"
+
 [node name="Wall" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(248, 116)
-texture = ExtResource("19_fpjli")
+position = Vector2(248, 122)
+texture = ExtResource("22_n5v0t")
+hframes = 4
+
+[node name="CoinCollector" type="Sprite2D" parent="."]
+position = Vector2(146, 12)
+texture = ExtResource("20_sy7f8")
+
+[node name="Skull" type="Sprite2D" parent="."]
+position = Vector2(299, 10)
+texture = ExtResource("21_cxlqn")
+
+[node name="WallHp" type="TextureProgressBar" parent="."]
+offset_left = 221.0
+offset_top = 6.0
+offset_right = 247.0
+offset_bottom = 9.0
+scale = Vector2(2.52, 2)
+max_value = 30.0
+value = 30.0
+texture_progress = ExtResource("23_bcpn2")
+
+[node name="StartWaveButton" type="Button" parent="."]
+offset_left = 96.0
+offset_top = 114.0
+offset_right = 166.0
+offset_bottom = 135.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+theme_override_font_sizes/font_size = 14
+text = "Next wave"
 
 [connection signal="timeout" from="FireSpell/Timer" to="FireSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="WaterSpell/Timer" to="WaterSpell" method="_on_timer_timeout"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://obeai5ocqi7h"]
+
+[ext_resource type="FontFile" uid="uid://bpwge0utom0ky" path="res://fonts/retganon.ttf" id="1_d3boh"]
+[ext_resource type="Script" path="res://scripts/core/tutorial.gd" id="1_mnavm"]
+[ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="1_vjqsf"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_mnavm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 4.0
+offset_top = 9.0
+offset_right = 304.0
+offset_bottom = 169.0
+theme_override_fonts/normal_font = ExtResource("1_d3boh")
+theme_override_font_sizes/normal_font_size = 16
+text = "1. Shortcuts: Q for Fire, W for Water, E for Earth,
+	R for Summon
+
+2. Combine any 3 elements to summon a creature
+
+3. Click and hold to deploy creatures, you may only
+	deploy once.
+
+4. Collect coins by mouse.
+
+5. Have fun and leave a like!
+"
+scroll_active = false
+
+[node name="Tutorial" type="Button" parent="."]
+offset_left = 247.0
+offset_top = 143.0
+offset_right = 307.0
+offset_bottom = 167.0
+theme_override_fonts/font = ExtResource("1_vjqsf")
+text = "BACK"
+
+[connection signal="pressed" from="Tutorial" to="." method="_on_tutorial_pressed"]

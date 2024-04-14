@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="LD55"
-run/main_scene="res://scene_files/main.tscn"
+run/main_scene="res://scene_files/start_screen.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 

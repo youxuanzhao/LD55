@@ -20,10 +20,10 @@ func _process(delta):
 	if is_in_cooldown:
 		cooldown.scale.y = timer.time_left / default_cooldown
 	
-	if Input.is_action_just_pressed("water_spell") and !(is_in_cooldown):
+	if Input.is_action_just_pressed("water_spell") and !(is_in_cooldown) and !(GameManager.instance.is_paused):
 		GameManager.instance.add_water()
 		start_cooldown()
-		print(GameManager.instance.get_current_list())
+		
 
 func start_cooldown():
 	is_in_cooldown = true

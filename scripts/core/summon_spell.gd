@@ -6,7 +6,7 @@ extends Node2D
 @onready var cooldown = $Cooldown
 
 var quality : int = 1
-var default_cooldown : float = 10.0
+var default_cooldown : float = 0
 var is_in_cooldown : bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -20,10 +20,10 @@ func _process(delta):
 	if is_in_cooldown:
 		cooldown.scale.y = timer.time_left / default_cooldown
 	
-	if Input.is_action_just_pressed("summon") and !(is_in_cooldown):
+	if Input.is_action_just_pressed("summon") and !(is_in_cooldown) and !(GameManager.instance.is_paused):
 		GameManager.instance.summon()
 		start_cooldown()
-		print(GameManager.instance.get_current_list())
+		
 
 func start_cooldown():
 	is_in_cooldown = true
