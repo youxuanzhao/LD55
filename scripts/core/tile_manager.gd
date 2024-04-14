@@ -14,7 +14,7 @@ func _process(delta):
 #		var temp = preload("res://scene_files/enemy.tscn").instantiate()
 #		temp.set_script(preload("res://scripts/enemies/retard.gd"))
 #		spawn_enemy_on(temp,Vector2i(13,1))
-	print(local_to_map(get_global_mouse_position()))
+	#print(local_to_map(get_global_mouse_position()))
 	pass
 
 func summon(target: Minion):

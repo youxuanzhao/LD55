@@ -18,12 +18,13 @@ var earth_level : int = 0
 var summon_level : int = 0
 var extra_health : int = 0
 var extra_attack : int = 0
+var is_locked : bool = false
 
 
+var waves = [[3, 8, 12, 18], [3, 6, 10, 14, 17, 17], [2, 6, 9, 9, 13, 15, 19, 20], [2, 5, 9, 9, 14, 16, 19, 19, 24, 27, 29, 31], [2, 2, 6, 8, 11, 11, 13, 14, 18, 24, 25, 26, 30, 30, 35, 37, 41, 46, 50, 58]]
+var wave_config = [[0, 0, 0, 1], [0, 0, 0, 1, 0, 1], [0, 0, 0, 1, 0, 1, 0, 2], [0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 2, 2], [0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 2, 2, 1, 1, 2, 1, 2, 2, 2]]
 
-@export var waves : Array
-@export var wave_config : Array
-@export var wall_hp : int = 10
+@export var wall_hp : int = 30
 
 const inferno = ["fire","fire","fire"]
 const lava1 = ["fire","fire","earth"]
@@ -285,11 +286,11 @@ func wall_take_damage(amount: int):
 	wall_hp -= amount
 
 func start_wave():
-	$WaveCount.text = str("Wave "+str(current_wave+1))
 	$RefreshButton.visible = false
 	$Label2.visible = true
 	$ItemSlot.visible = false
 	current_wave += 1
+	$WaveCount.text = str("Wave "+str(current_wave+1))
 	current_enemy = 0
 	SummonDisplay.instance.remove_all()
 	current_list = []
@@ -337,4 +338,18 @@ func win_game():
 	get_tree().change_scene_to_file("res://scene_files/victory.tscn")
 
 func _on_start_wave_button_pressed():
+	$ButtonAudioPlayer.play()
 	start_wave()
+
+
+func _on_music_control_toggled(toggled_on):
+	$ButtonAudioPlayer.play()
+	$AudioStreamPlayer.stream_paused = toggled_on
+
+
+func _on_refresh_button_pressed():
+	$ButtonAudioPlayer.play()
+
+
+func _on_lock_button_toggled(toggled_on):
+	$ButtonAudioPlayer.play()

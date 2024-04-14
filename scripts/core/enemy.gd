@@ -27,15 +27,15 @@ func _ready():
 	HealthBar.value = hp
 
 func _tick():
+	tile_position = TileManager.instance.local_to_map(position)
+	position = TileManager.instance.map_to_local(tile_position) + pos_offset
 	if hp < 1:
 		GameManager.instance.spawn_coin_on_position(position,randi_range(0,4))
-		GameManager.instance.elim()
-		queue_free()
+		death()
 	
-	if GameManager.instance.tick - enter_tick > lifespan:
+	elif GameManager.instance.tick - enter_tick > lifespan:
 		if lifespan!=-1:
-			GameManager.instance.elim()
-			queue_free()
+			death()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -78,6 +78,15 @@ func attack(direction: Vector2i) -> bool:
 			return false
 	else:
 		return false
+
+func death():
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "rotation", 360, 0.5)
+	tween.tween_property(self, "scale", Vector2(0.1,0.1), 0.5)
+	tween.set_parallel(false)
+	GameManager.instance.elim()
+	tween.tween_callback(queue_free)
 
 func take_damage(amount: int):
 	$AudioStreamPlayer2D.play()

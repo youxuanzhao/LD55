@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://d0wgx0cytefyj"]
+[gd_scene load_steps=41 format=3 uid="uid://d0wgx0cytefyj"]
 
 [ext_resource type="Texture2D" uid="uid://dylptgvtlyr76" path="res://asset/tile_test.png" id="1_opalr"]
 [ext_resource type="Script" path="res://scripts/core/game_manager.gd" id="1_xqyqv"]
@@ -23,13 +23,18 @@
 [ext_resource type="Script" path="res://scripts/core/summon_spell.gd" id="14_uxo20"]
 [ext_resource type="Texture2D" uid="uid://c037y062dn5h2" path="res://asset/minion_test.png" id="15_f44ak"]
 [ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="18_6kpsa"]
+[ext_resource type="Shader" path="res://blink.gdshader" id="18_75jld"]
 [ext_resource type="Texture2D" uid="uid://cwgkgcuew6o7q" path="res://asset/coin.png" id="20_sy7f8"]
 [ext_resource type="Texture2D" uid="uid://ior526kmefn" path="res://asset/skull.png" id="21_cxlqn"]
 [ext_resource type="Texture2D" uid="uid://jd3ds6mhkd6c" path="res://asset/wall-Sheet.png" id="22_n5v0t"]
 [ext_resource type="Texture2D" uid="uid://ix8oxvjipihp" path="res://asset/wall_hp.png" id="23_bcpn2"]
-[ext_resource type="AudioStream" uid="uid://opmh13s58aot" path="res://sfx/theme.wav" id="26_y77xf"]
 [ext_resource type="Texture2D" uid="uid://30i8t6oku1f7" path="res://asset/refresh.png" id="28_8a10b"]
+[ext_resource type="AudioStream" uid="uid://ckak8am5v65tk" path="res://sfx/Trinity.mp3" id="29_63vbf"]
 [ext_resource type="FontFile" uid="uid://bpwge0utom0ky" path="res://fonts/retganon.ttf" id="29_mbdpg"]
+[ext_resource type="Texture2D" uid="uid://dc514v3ycx660" path="res://asset/bgm_on.png" id="31_pm42x"]
+[ext_resource type="Texture2D" uid="uid://t6btwo1bs25c" path="res://asset/unlock.png" id="32_72aug"]
+[ext_resource type="Texture2D" uid="uid://4a4xqh01v78d" path="res://asset/bgm_off.png" id="32_ci3pe"]
+[ext_resource type="Texture2D" uid="uid://c6o15lpc4pcv1" path="res://asset/lock.png" id="33_q6yp4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf75g"]
 texture = ExtResource("1_opalr")
@@ -48,10 +53,12 @@ sources/0 = SubResource("TileSetAtlasSource_gf75g")
 sources/1 = SubResource("TileSetAtlasSource_o86jr")
 sources/2 = SubResource("TileSetAtlasSource_h0b56")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jprqx"]
+shader = ExtResource("18_75jld")
+shader_parameter/flash = 0.0
+
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_xqyqv")
-waves = [[3, 6, 8, 12], [3, 3, 6, 8, 12, 16], [3, 4, 6, 6, 9, 14, 17, 18], [2, 5, 8, 8, 12, 13, 16, 16, 20, 24, 26, 27], [2, 2, 6, 8, 11, 11, 13, 14, 18, 24, 25, 26, 30, 30, 35, 37, 41, 46, 50, 58]]
-wave_config = [[0, 0, 0, 1], [0, 0, 0, 1, 0, 1], [0, 0, 0, 1, 0, 1, 0, 2], [0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 2, 2], [0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 2, 2, 1, 1, 2, 1, 2, 2, 2]]
 
 [node name="Battleground" type="Sprite2D" parent="."]
 z_index = -1
@@ -76,9 +83,11 @@ position = Vector2(88, 78)
 scale = Vector2(2.5, 2.5)
 
 [node name="FireSpell" type="Node2D" parent="."]
-position = Vector2(26, 160)
+position = Vector2(26, 154)
 scale = Vector2(2, 2)
 script = ExtResource("4_4u3d8")
+default_cooldown = 3.0
+cooldown_reduce = 0.5
 metadata/_edit_group_ = true
 
 [node name="Icon" type="Sprite2D" parent="FireSpell"]
@@ -89,6 +98,7 @@ texture = ExtResource("5_fdymo")
 hframes = 4
 
 [node name="Timer" type="Timer" parent="FireSpell"]
+one_shot = true
 
 [node name="Cooldown" type="Sprite2D" parent="FireSpell"]
 visible = false
@@ -102,9 +112,11 @@ centered = false
 stream = ExtResource("12_gt1nx")
 
 [node name="WaterSpell" type="Node2D" parent="."]
-position = Vector2(65, 160)
+position = Vector2(65, 154)
 scale = Vector2(2, 2)
 script = ExtResource("8_32qkn")
+default_cooldown = 3.0
+cooldown_reduce = 0.5
 metadata/_edit_group_ = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="WaterSpell"]
@@ -119,6 +131,7 @@ texture = ExtResource("5_fdymo")
 hframes = 4
 
 [node name="Timer" type="Timer" parent="WaterSpell"]
+one_shot = true
 
 [node name="Cooldown" type="Sprite2D" parent="WaterSpell"]
 visible = false
@@ -129,9 +142,11 @@ texture = ExtResource("7_67vuv")
 centered = false
 
 [node name="EarthSpell" type="Node2D" parent="."]
-position = Vector2(105, 160)
+position = Vector2(105, 154)
 scale = Vector2(2, 2)
 script = ExtResource("10_ank46")
+default_cooldown = 3.0
+cooldown_reduce = 0.5
 metadata/_edit_group_ = true
 
 [node name="Icon" type="Sprite2D" parent="EarthSpell"]
@@ -142,6 +157,7 @@ texture = ExtResource("5_fdymo")
 hframes = 4
 
 [node name="Timer" type="Timer" parent="EarthSpell"]
+one_shot = true
 
 [node name="Cooldown" type="Sprite2D" parent="EarthSpell"]
 visible = false
@@ -156,12 +172,15 @@ position = Vector2(-39.5, 0)
 stream = ExtResource("12_gt1nx")
 
 [node name="SummonSpell" type="Node2D" parent="."]
-position = Vector2(146, 160)
+position = Vector2(146, 154)
 scale = Vector2(2, 2)
 script = ExtResource("14_uxo20")
+default_cooldown = 4.0
+cooldown_reduce = 1.0
 metadata/_edit_group_ = true
 
 [node name="Icon" type="Sprite2D" parent="SummonSpell"]
+material = SubResource("ShaderMaterial_jprqx")
 scale = Vector2(0.86, 0.86)
 texture = ExtResource("14_237hj")
 
@@ -170,6 +189,7 @@ texture = ExtResource("5_fdymo")
 hframes = 4
 
 [node name="Timer" type="Timer" parent="SummonSpell"]
+one_shot = true
 
 [node name="Cooldown" type="Sprite2D" parent="SummonSpell"]
 visible = false
@@ -225,7 +245,9 @@ offset_top = 70.0
 offset_right = 107.0
 offset_bottom = 93.0
 theme_override_fonts/font = ExtResource("18_6kpsa")
-text = "Closed"
+text = "Shop
+Closed"
+horizontal_alignment = 1
 
 [node name="WaveCount" type="Label" parent="."]
 offset_left = 177.0
@@ -277,6 +299,7 @@ value = 30.0
 texture_progress = ExtResource("23_bcpn2")
 
 [node name="StartWaveButton" type="Button" parent="."]
+z_index = 1
 offset_left = 246.0
 offset_top = 157.0
 offset_right = 316.0
@@ -285,9 +308,20 @@ theme_override_fonts/font = ExtResource("18_6kpsa")
 theme_override_font_sizes/font_size = 14
 text = "Next wave"
 
+[node name="Polygon2D" type="Polygon2D" parent="StartWaveButton"]
+z_index = -1
+position = Vector2(2, 1)
+color = Color(0, 0, 0, 0.639216)
+polygon = PackedVector2Array(-74, -158, -74, 32, 72, 32, 72, -158)
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("26_y77xf")
+stream = ExtResource("29_63vbf")
+volume_db = -10.0
 autoplay = true
+
+[node name="ButtonAudioPlayer" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(120, 42)
+stream = ExtResource("12_gt1nx")
 
 [node name="RefreshButton" type="TextureButton" parent="."]
 offset_left = 120.0
@@ -295,6 +329,16 @@ offset_top = 42.0
 offset_right = 136.0
 offset_bottom = 58.0
 texture_normal = ExtResource("28_8a10b")
+
+[node name="Label7" type="Label" parent="RefreshButton"]
+layout_mode = 0
+offset_left = -90.0
+offset_top = -27.0
+offset_right = 26.0
+offset_bottom = 8.0
+theme_override_fonts/font = ExtResource("18_6kpsa")
+text = "Time for Shopping!"
+horizontal_alignment = 1
 
 [node name="Price" type="Label" parent="RefreshButton"]
 layout_mode = 0
@@ -308,10 +352,69 @@ theme_override_font_sizes/font_size = 24
 text = "2"
 horizontal_alignment = 1
 
+[node name="LockButton" type="TextureButton" parent="RefreshButton"]
+layout_mode = 0
+offset_top = 29.0
+offset_right = 40.0
+offset_bottom = 69.0
+toggle_mode = true
+texture_normal = ExtResource("32_72aug")
+texture_pressed = ExtResource("33_q6yp4")
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 21.0
+offset_top = 164.0
+offset_right = 28.0
+offset_bottom = 178.0
+scale = Vector2(1.68, 1)
+theme_override_fonts/font = ExtResource("29_mbdpg")
+text = "Q"
+
+[node name="Label4" type="Label" parent="."]
+offset_left = 61.0
+offset_top = 164.0
+offset_right = 68.0
+offset_bottom = 178.0
+scale = Vector2(1.68, 1)
+theme_override_fonts/font = ExtResource("29_mbdpg")
+text = "W"
+
+[node name="Label5" type="Label" parent="."]
+offset_left = 101.0
+offset_top = 164.0
+offset_right = 108.0
+offset_bottom = 178.0
+scale = Vector2(1.68, 1)
+theme_override_fonts/font = ExtResource("29_mbdpg")
+text = "E
+"
+
+[node name="Label6" type="Label" parent="."]
+offset_left = 143.0
+offset_top = 164.0
+offset_right = 150.0
+offset_bottom = 178.0
+scale = Vector2(1.68, 1)
+theme_override_fonts/font = ExtResource("29_mbdpg")
+text = "R"
+
+[node name="MusicControl" type="TextureButton" parent="."]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 44.0
+offset_bottom = 43.0
+toggle_mode = true
+texture_normal = ExtResource("31_pm42x")
+texture_pressed = ExtResource("32_ci3pe")
+
 [connection signal="timeout" from="FireSpell/Timer" to="FireSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="WaterSpell/Timer" to="WaterSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="EarthSpell/Timer" to="EarthSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="SummonSpell/Timer" to="SummonSpell" method="_on_timer_timeout"]
 [connection signal="timeout" from="TickManager" to="." method="_on_tick_manager_timeout"]
 [connection signal="pressed" from="StartWaveButton" to="." method="_on_start_wave_button_pressed"]
+[connection signal="pressed" from="RefreshButton" to="." method="_on_refresh_button_pressed"]
 [connection signal="pressed" from="RefreshButton" to="ItemSlot" method="_on_texture_button_pressed"]
+[connection signal="toggled" from="RefreshButton/LockButton" to="." method="_on_lock_button_toggled"]
+[connection signal="toggled" from="RefreshButton/LockButton" to="ItemSlot" method="_on_lock_button_toggled"]
+[connection signal="toggled" from="MusicControl" to="." method="_on_music_control_toggled"]

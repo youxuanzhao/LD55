@@ -1,26 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4ghfwfk1a58n"]
+[gd_scene load_steps=5 format=3 uid="uid://b4ghfwfk1a58n"]
 
 [ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="1_1rk54"]
 [ext_resource type="Script" path="res://scripts/core/start_screen.gd" id="1_trx1i"]
+[ext_resource type="Texture2D" uid="uid://dp5c2bk4c554v" path="res://asset/default.png" id="3_ox4gd"]
+[ext_resource type="AudioStream" uid="uid://opmh13s58aot" path="res://sfx/theme.wav" id="4_07sb2"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_trx1i")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 118.0
-offset_top = 61.0
-offset_right = 198.0
-offset_bottom = 85.0
+offset_left = 117.0
+offset_top = 84.0
+offset_right = 197.0
+offset_bottom = 108.0
 theme_override_fonts/font = ExtResource("1_1rk54")
 text = "START"
 
 [node name="Tutorial" type="Button" parent="."]
-offset_left = 101.0
-offset_top = 110.0
-offset_right = 221.0
-offset_bottom = 134.0
+offset_left = 100.0
+offset_top = 133.0
+offset_right = 220.0
+offset_bottom = 157.0
 theme_override_fonts/font = ExtResource("1_1rk54")
 text = "HOW TO PLAY"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(160, 90)
+scale = Vector2(2, 2)
+texture = ExtResource("3_ox4gd")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 105.0
+offset_top = 34.0
+offset_right = 210.0
+offset_bottom = 64.0
+theme_override_fonts/font = ExtResource("1_1rk54")
+theme_override_font_sizes/font_size = 32
+text = "Trinity"
+horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_07sb2")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Tutorial" to="." method="_on_tutorial_pressed"]

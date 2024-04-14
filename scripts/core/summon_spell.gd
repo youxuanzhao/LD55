@@ -6,7 +6,7 @@ extends Node2D
 @onready var cooldown = $Cooldown
 
 var quality : int = 1
-@export var default_cooldown : float = 4.0
+@export var default_cooldown : float = 3.0
 @export var cooldown_reduce : float = 0.2
 var is_in_cooldown : bool = false
 
@@ -30,10 +30,14 @@ func _process(delta):
 
 func start_cooldown():
 	is_in_cooldown = true
-	timer.start(default_cooldown-(GameManager.instance.summon_level-1)*cooldown_reduce)
+	timer.start(default_cooldown-GameManager.instance.summon_level*cooldown_reduce)
 	cooldown.visible = true
 
 
 func _on_timer_timeout():
+	var tween = get_tree().create_tween()
+	tween.tween_property($Icon.get_material(), "shader_parameter/flash", 1.0, 0.1)
+	tween.tween_property($Icon.get_material(), "shader_parameter/flash", 0.0, 0.1)
 	is_in_cooldown = false
 	cooldown.visible = false
+

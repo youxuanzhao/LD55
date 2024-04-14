@@ -29,7 +29,7 @@ func _process(delta):
 
 func start_cooldown():
 	is_in_cooldown = true
-	timer.start(default_cooldown-(GameManager.instance.water_level-1)*cooldown_reduce)
+	timer.start(default_cooldown-GameManager.instance.water_level*cooldown_reduce)
 	cooldown.visible = true
 
 

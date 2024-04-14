@@ -6,6 +6,7 @@ var current_item : int = 0
 var current_price : int = 0
 
 var is_hovering : bool = false
+var is_locked : bool = false
 
 static var instance : ItemSlot
 
@@ -17,7 +18,8 @@ func _ready():
 	instance = self
 
 func refresh():
-	current_item = randi_range(0,5)
+	if !is_locked:
+		current_item = randi_range(0,5)
 	
 	if (current_item == 0 and GameManager.instance.fire_level == 3) or (current_item == 1 and GameManager.instance.water_level == 3) or (current_item == 2 and GameManager.instance.earth_level == 3) or (current_item == 3 and GameManager.instance.summon_level == 3):
 		return refresh()
@@ -28,7 +30,7 @@ func refresh():
 	$Price.text = str(price_list[current_item])
 	
 func _process(delta):
-	if is_hovering and Input.is_action_just_pressed("left_mouse"):
+	if is_hovering and Input.is_action_just_pressed("left_mouse") and !(is_locked):
 		purchase()
 
 func _on_area_2d_mouse_entered():
@@ -61,6 +63,10 @@ func _on_area_2d_mouse_exited():
 
 
 func _on_texture_button_pressed():
-	if GameManager.instance.total_coins >= 2:
+	if GameManager.instance.total_coins >= 2 and !(is_locked):
 		GameManager.instance.total_coins -= 2
 		refresh()
+
+
+func _on_lock_button_toggled(toggled_on):
+	is_locked = toggled_on

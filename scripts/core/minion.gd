@@ -28,12 +28,12 @@ func _ready():
 	HealthBar.value = hp
 
 func _tick():
-	if hp < 1:
-		queue_free()
 	
-	if GameManager.instance.tick - enter_tick > lifespan:
+	if hp < 1:
+		death()
+	elif GameManager.instance.tick - enter_tick > lifespan and !(is_reserve):
 		if lifespan!=-1:
-			queue_free()
+			death()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -47,9 +47,13 @@ func _process(delta):
 	if Input.is_action_just_released("left_mouse") and is_holding:
 		is_holding = false
 		var temp = TileManager.instance.local_to_map(position)
-		if (temp.x < 12 or temp.x > 17 or temp.y < 1 or (temp.y > 6 and temp.y != 8)) and !(TileManager.instance.has_entity_on(temp)):
+		if (temp.x < 13 or temp.x > 17 or temp.y < 2 or (temp.y > 6 and temp.y != 8)) or TileManager.instance.has_entity_on(temp):
+			print(TileManager.instance.has_entity_on(temp))
+			print(temp)
 			position = pos_record
 		else:
+			print(TileManager.instance.has_entity_on(temp))
+			print(temp)
 			position = TileManager.instance.map_to_local(temp) + pos_offset
 			tile_position = temp
 			if temp.y !=8:
@@ -97,7 +101,13 @@ func take_damage(amount: int):
 	hp= hp - amount
 
 
-
+func death():
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "rotation", 360, 0.5)
+	tween.tween_property(self, "scale", Vector2(0.1,0.1), 0.5)
+	tween.set_parallel(false)
+	tween.tween_callback(queue_free)
 
 func _on_area_2d_mouse_entered():
 	is_hovering = true

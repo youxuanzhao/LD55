@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ceco0rk2unwjd"]
+[gd_scene load_steps=5 format=3 uid="uid://ceco0rk2unwjd"]
 
 [ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="1_1difl"]
 [ext_resource type="Script" path="res://scripts/core/victory.gd" id="1_3liq7"]
+[ext_resource type="Texture2D" uid="uid://158eq6fh7o24" path="res://asset/victory.png" id="3_ola5w"]
+[ext_resource type="AudioStream" uid="uid://opmh13s58aot" path="res://sfx/theme.wav" id="4_yfl63"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_3liq7")
@@ -22,5 +24,16 @@ offset_right = 225.0
 offset_bottom = 138.0
 theme_override_fonts/font = ExtResource("1_1difl")
 text = "RETURN TO MENU"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("3_ola5w")
+centered = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_yfl63")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

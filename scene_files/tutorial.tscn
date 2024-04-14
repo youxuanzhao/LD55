@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://obeai5ocqi7h"]
+[gd_scene load_steps=6 format=3 uid="uid://obeai5ocqi7h"]
 
 [ext_resource type="FontFile" uid="uid://bpwge0utom0ky" path="res://fonts/retganon.ttf" id="1_d3boh"]
 [ext_resource type="Script" path="res://scripts/core/tutorial.gd" id="1_mnavm"]
 [ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="1_vjqsf"]
-[ext_resource type="AudioStream" uid="uid://dikmxf6xdj0gk" path="res://sfx/purchase.wav" id="4_vjj8p"]
+[ext_resource type="AudioStream" uid="uid://opmh13s58aot" path="res://sfx/theme.wav" id="5_qnty0"]
+[ext_resource type="Texture2D" uid="uid://dp5c2bk4c554v" path="res://asset/default.png" id="5_su4au"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_mnavm")
@@ -17,15 +18,14 @@ theme_override_fonts/normal_font = ExtResource("1_d3boh")
 theme_override_font_sizes/normal_font_size = 16
 text = "1. Shortcuts: Q for Fire, W for Water, E for Earth,
 	R for Summon
-
 2. Combine any 3 elements to summon a creature
-
 3. Click and hold to deploy creatures, you may only
 	deploy once.
-
 4. Collect coins by mouse.
-
-5. Have fun and leave a like!
+5. You can buy upgrades after every wave.
+6. You can refresh or lock the item provided in the
+	shop.
+6. Have fun and leave a like!
 "
 scroll_active = false
 
@@ -37,7 +37,15 @@ offset_bottom = 167.0
 theme_override_fonts/font = ExtResource("1_vjqsf")
 text = "BACK"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("4_vjj8p")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("5_su4au")
+centered = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_qnty0")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="Tutorial" to="." method="_on_tutorial_pressed"]

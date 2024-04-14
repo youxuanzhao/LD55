@@ -13,7 +13,9 @@ func _ready():
 
 func _tick():
 	super._tick()
+	if (GameManager.instance.tick - birth_tick) % atkspeed == 0: 
+		attack(Vector2i(0,1))
+		attack(Vector2i(0,-1))
 	if (GameManager.instance.tick - birth_tick) % movespeed == 0:
 		move(Vector2i(0,-1))
-	if (GameManager.instance.tick - birth_tick) % atkspeed == 0: 
-		attack(Vector2i(0,-1))
+
