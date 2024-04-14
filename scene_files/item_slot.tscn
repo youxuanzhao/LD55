@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://dumg56fkomd1b"]
+
+[ext_resource type="Script" path="res://scripts/core/item_slot.gd" id="1_022m2"]
+[ext_resource type="Texture2D" uid="uid://b8gjgql4h3xr5" path="res://asset/fire_orb.png" id="2_pf2lx"]
+[ext_resource type="FontFile" uid="uid://bpwge0utom0ky" path="res://fonts/retganon.ttf" id="3_addq2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8moa"]
+
+[node name="ItemSlot" type="Node2D"]
+script = ExtResource("1_022m2")
+
+[node name="ItemSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_pf2lx")
+
+[node name="Desc" type="Label" parent="."]
+offset_left = -14.0
+offset_top = 10.0
+offset_right = 96.0
+offset_bottom = 33.0
+scale = Vector2(0.27, 0.27)
+theme_override_fonts/font = ExtResource("3_addq2")
+theme_override_font_sizes/font_size = 16
+text = "Reduce Fire Cooldown"
+
+[node name="Price" type="Label" parent="."]
+offset_left = -14.0
+offset_top = 15.0
+offset_right = 96.0
+offset_bottom = 38.0
+scale = Vector2(0.27, 0.27)
+theme_override_fonts/font = ExtResource("3_addq2")
+theme_override_font_sizes/font_size = 24
+text = "5"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_v8moa")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

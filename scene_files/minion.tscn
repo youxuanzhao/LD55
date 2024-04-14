@@ -1,12 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://km7piloexuf7"]
+[gd_scene load_steps=10 format=3 uid="uid://km7piloexuf7"]
 
 [ext_resource type="Texture2D" uid="uid://c037y062dn5h2" path="res://asset/minion_test.png" id="1_puatt"]
 [ext_resource type="Script" path="res://scripts/core/minion.gd" id="2_08ak8"]
 [ext_resource type="Texture2D" uid="uid://crfotyi4hdkcf" path="res://asset/healthbar_under.png" id="3_4byj3"]
 [ext_resource type="Texture2D" uid="uid://cctv0d5r10iqp" path="res://asset/healthbar_progress.png" id="4_4sixi"]
+[ext_resource type="AudioStream" uid="uid://dcpjrcj7hg4dg" path="res://sfx/Hit_Hurt2.wav" id="5_mevvl"]
+[ext_resource type="AudioStream" uid="uid://cqheuc1sqng56" path="res://sfx/Hit_Hurt3.wav" id="6_gyyic"]
+[ext_resource type="AudioStream" uid="uid://baowxxngxc106" path="res://sfx/Hit_Hurt4.wav" id="7_la8tf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jiu2d"]
 size = Vector2(12, 11.5)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_eomav"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("5_mevvl")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_gyyic")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_la8tf")
+stream_2/weight = 1.0
 
 [node name="Minion1" type="Sprite2D"]
 texture = ExtResource("1_puatt")
@@ -38,6 +51,9 @@ emission_sphere_radius = 10.0
 gravity = Vector2(2.08165e-12, 2.08165e-12)
 radial_accel_max = 6.06
 angle_max = 360.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_eomav")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
 [connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

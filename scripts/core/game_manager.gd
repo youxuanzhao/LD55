@@ -12,6 +12,14 @@ var minion_template : Minion = preload("res://scene_files/minion.tscn").instanti
 var remaining_enemies : int
 var has_spawned_all : bool = false
 var is_paused: bool = false
+var fire_level : int = 1
+var water_level : int = 1
+var earth_level : int = 1
+var summon_level : int = 1
+var extra_health : int = 0
+var extra_attack : int = 0
+
+
 
 @export var waves : Array
 @export var wall_hp : int = 30
@@ -129,6 +137,32 @@ func add_earth():
 
 func get_current_list():
 	return current_list
+
+func upgrade_fire():
+	fire_level+=1
+
+func upgrade_water():
+	water_level+=1
+
+func upgrade_earth():
+	earth_level+=1
+	
+func upgrade_summon():
+	summon_level+=1
+
+func upgrade_health():
+	extra_health+=1
+
+func upgrade_attack():
+	extra_attack+=1
+
+
+
+
+
+
+
+
 
 func summon():
 	if current_list.size() == 3:

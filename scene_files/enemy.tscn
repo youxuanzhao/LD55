@@ -1,9 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpkhnirkj52u4"]
+[gd_scene load_steps=9 format=3 uid="uid://cpkhnirkj52u4"]
 
 [ext_resource type="Texture2D" uid="uid://ce6thy73ujrrf" path="res://asset/enemy_test.png" id="1_2b8b6"]
 [ext_resource type="Script" path="res://scripts/core/enemy.gd" id="2_p6r57"]
 [ext_resource type="Texture2D" uid="uid://crfotyi4hdkcf" path="res://asset/healthbar_under.png" id="3_ofbjh"]
 [ext_resource type="Texture2D" uid="uid://cctv0d5r10iqp" path="res://asset/healthbar_progress.png" id="4_rmgcr"]
+[ext_resource type="AudioStream" uid="uid://dcpjrcj7hg4dg" path="res://sfx/Hit_Hurt2.wav" id="5_sdy5j"]
+[ext_resource type="AudioStream" uid="uid://cqheuc1sqng56" path="res://sfx/Hit_Hurt3.wav" id="6_htab1"]
+[ext_resource type="AudioStream" uid="uid://baowxxngxc106" path="res://sfx/Hit_Hurt4.wav" id="7_tl6mk"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_b7umv"]
+playback_mode = 1
+streams_count = 3
+stream_0/stream = ExtResource("5_sdy5j")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("6_htab1")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("7_tl6mk")
+stream_2/weight = 1.0
 
 [node name="Enemy" type="Sprite2D"]
 texture = ExtResource("1_2b8b6")
@@ -30,3 +43,6 @@ emission_sphere_radius = 10.0
 gravity = Vector2(2.08165e-12, 2.08165e-12)
 radial_accel_max = 6.06
 angle_max = 360.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_b7umv")

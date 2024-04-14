@@ -78,4 +78,5 @@ func attack(direction: Vector2i) -> bool:
 		return false
 
 func take_damage(amount: int):
+	$AudioStreamPlayer2D.play()
 	hp= hp - amount
