@@ -24,8 +24,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("summon") and !(is_in_cooldown) and !(GameManager.instance.is_paused):
 		$AudioStreamPlayer2D.play()
-		GameManager.instance.summon()
-		start_cooldown()
+		if GameManager.instance.summon():
+			start_cooldown()
 		
 
 func start_cooldown():

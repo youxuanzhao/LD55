@@ -54,6 +54,7 @@ func clear_level():
 	for i in get_children():
 		if i is Minion:
 			if i.tile_position.y != 8:
+				GameManager.instance.spawn_coin_on_position(i.position,1)
 				i.queue_free()
 		if i is Enemy:
 			i.queue_free()

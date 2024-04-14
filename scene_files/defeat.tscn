@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1a7lf5df5yp3"]
+
+[ext_resource type="Script" path="res://scripts/core/victory.gd" id="1_oy4kc"]
+[ext_resource type="FontFile" uid="uid://c3y6mbq3sht5j" path="res://fonts/dpcomic.ttf" id="2_5p6eh"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_oy4kc")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 107.0
+offset_top = 65.0
+offset_right = 219.0
+offset_bottom = 95.0
+theme_override_fonts/font = ExtResource("2_5p6eh")
+theme_override_font_sizes/font_size = 32
+text = "You Lose!"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 95.0
+offset_top = 114.0
+offset_right = 225.0
+offset_bottom = 138.0
+theme_override_fonts/font = ExtResource("2_5p6eh")
+text = "RETURN TO MENU"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
