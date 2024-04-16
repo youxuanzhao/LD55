@@ -6,16 +6,11 @@ extends Node2D
 @onready var cooldown = $Cooldown
 
 var quality : int = 1
-@export var default_cooldown : float = 2.0
-@export var cooldown_reduce : float = 0.2
+@export var default_cooldown : float = 2.0 
+@export var cooldown_reduce : float = 0.2 #Cooldown reduction each level
 var is_in_cooldown : bool = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	frame.frame = GameManager.instance.earth_level
 	

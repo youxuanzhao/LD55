@@ -21,8 +21,10 @@ var extra_attack : int = 0
 var is_locked : bool = false
 
 
+# You may make changes on how levels are edited
 var waves = [[3, 8, 12, 18], [3, 6, 10, 14, 17, 17], [2, 6, 9, 9, 13, 15, 19, 20], [2, 5, 9, 9, 14, 16, 19, 19, 24, 27, 29, 31], [2, 2, 6, 8, 11, 11, 13, 14, 18, 24, 25, 26, 30, 30, 35, 37, 41, 46, 50, 58]]
 var wave_config = [[0, 0, 0, 1], [0, 0, 0, 1, 0, 1], [0, 0, 0, 1, 0, 1, 0, 2], [0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 2, 2], [0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 2, 2, 1, 1, 2, 1, 2, 2, 2]]
+
 
 @export var wall_hp : int = 30
 
@@ -53,8 +55,6 @@ const life3 = ["water","fire","earth"]
 const life4 = ["water","earth","fire"]
 const life5 = ["earth","fire","water"]
 const life6 = ["earth","water","fire"]
-
-
 
 
 @onready var LeftArrow : Sprite2D = $LeftArrow
@@ -162,14 +162,6 @@ func upgrade_health():
 
 func upgrade_attack():
 	extra_attack+=1
-
-
-
-
-
-
-
-
 
 func summon():
 	if current_list.size() == 3:

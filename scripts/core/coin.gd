@@ -3,19 +3,9 @@ extends Sprite2D
 
 var collector : Sprite2D
 
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func add_coin():
 	GameManager.instance.total_coins += 1
+
 
 func _on_area_2d_mouse_entered():
 	$AudioStreamPlayer2D.play()

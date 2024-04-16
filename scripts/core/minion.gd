@@ -28,7 +28,6 @@ func _ready():
 	HealthBar.value = hp
 
 func _tick():
-	
 	if hp < 1:
 		death()
 	elif GameManager.instance.tick - enter_tick > lifespan and !(is_reserve):

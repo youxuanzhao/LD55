@@ -9,12 +9,6 @@ extends Node2D
 @export var cooldown_reduce : float = 0.2
 var is_in_cooldown : bool = false
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	frame.frame = GameManager.instance.fire_level
 	

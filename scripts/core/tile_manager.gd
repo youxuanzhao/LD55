@@ -8,16 +8,13 @@ func _ready():
 	instance = self
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
 func _process(delta):
-#	if GameManager.instance.tick == 3:
-#		var temp = preload("res://scene_files/enemy.tscn").instantiate()
-#		temp.set_script(preload("res://scripts/enemies/retard.gd"))
-#		spawn_enemy_on(temp,Vector2i(13,1))
+	#This is a debug option to check the tile position of current mouse position
 	#print(local_to_map(get_global_mouse_position()))
 	pass
 
-func summon(target: Minion):
+func summon(target: Minion) -> bool:
 	for i in range(13,18):
 		if !(has_entity_on(Vector2i(i,8))):
 			target.position = map_to_local(Vector2i(i,8)) + target.pos_offset

@@ -8,7 +8,7 @@ var hp : int = 1
 var tile_position : Vector2i
 var is_reserve : bool = false
 var lifespan : int = -1
-var birth_tick : int
+var birth_tick : int 
 var enter_tick : int
 var is_friendly : bool = false
 
